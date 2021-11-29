@@ -1,8 +1,11 @@
+package com.dai.database;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import com.dai.bean.SpotHostLoginBean;
 
 public class SpotHostDatabase {
 	
@@ -20,13 +23,32 @@ public class SpotHostDatabase {
 		return con;
 	}
 	
+	public String getFirstName(String email) {
+		String firstName = null;
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/spots?allowPublicKeyRetrieval=true&useSSL=false", "root", "password");
+			PreparedStatement pst = con.prepareStatement("select first_name from spothost where host_email = ?");
+			pst.setString(1, email);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			firstName = rs.getString(1);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return firstName;
+	}
+	
 	public boolean validate(SpotHostLoginBean loginBean) throws ClassNotFoundException {
         boolean status = false;
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         try (Connection connection = DriverManager
-            .getConnection("jdbc:mysql://localhost:3306/spots?allowPublicKeyRetrieval=true&useSSL=false", "root", "password");
+            .getConnection("jdbc:mysql://localhost:3306/spots?allowPublicKeyRetrieval=true&useSSL=false", "root", "Djj@19950420");
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection

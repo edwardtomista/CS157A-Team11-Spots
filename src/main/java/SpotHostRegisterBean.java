@@ -1,3 +1,5 @@
+package com.dai.bean;
+
 public class SpotHostRegisterBean {
 	private String firstName;
 	private String lastName;

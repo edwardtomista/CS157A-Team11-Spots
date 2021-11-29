@@ -1,3 +1,5 @@
+package com.dai.bean;
+
 public class SpotterRegisterBean {
 	private String firstName;
 	private String lastName;

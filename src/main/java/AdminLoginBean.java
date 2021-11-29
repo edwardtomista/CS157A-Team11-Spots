@@ -1,3 +1,5 @@
+package com.dai.bean;
+
 public class AdminLoginBean {
 	private String id;
 	private String password;

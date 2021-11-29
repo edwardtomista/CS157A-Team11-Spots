@@ -1,3 +1,5 @@
+package com.dai.bean;
+
 public class SpotterLoginBean {
 	private String email;
 	private String password;

@@ -1,3 +1,5 @@
+package com.dai.bean;
+
 public class SpotHostLoginBean {
 	private String email;
 	private String password;

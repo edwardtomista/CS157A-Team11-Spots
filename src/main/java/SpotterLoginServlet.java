@@ -1,3 +1,5 @@
+package com.dai.servlets;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -5,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.dai.bean.SpotterLoginBean;
+import com.dai.database.SpotterDatabase;
 
 @WebServlet("/spotterlogin")
 public class SpotterLoginServlet extends HttpServlet {
@@ -23,11 +28,13 @@ public class SpotterLoginServlet extends HttpServlet {
         SpotterLoginBean loginBean = new SpotterLoginBean();
         loginBean.setEmail(email);
         loginBean.setPassword(password);
-
+        String firstName = spotterDb.getFirstName(email);
+        
         try {
             if (spotterDb.validate(loginBean)) {
             	HttpSession session = request.getSession();
 	            session.setAttribute("email",email);
+	            session.setAttribute("firstName",firstName);
 	            response.sendRedirect("spotterPage.jsp");
             } else {
             	response.sendRedirect("spotterLogin.jsp");
