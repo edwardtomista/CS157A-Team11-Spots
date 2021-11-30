@@ -32,27 +32,36 @@ pageEncoding="UTF-8"%>
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+db+"?allowPublicKeyRetrieval=true&useSSL=false",user, password);
             String name = request.getParameter("name");
             if(name == null){
-            	pst = con.prepareStatement("select * from spots");
+            	pst = con.prepareStatement("select spot_id, name, address, city, zipcode, group_size, category_1, category_2, category_3, noise_level, creation_date from spots");
             	rs = pst.executeQuery();
             	%>
-            	<table border="1" align="center">
+            	<table border="1">
             	<tr><th>Spot ID</th><th>Name</th><th>Address</th><th>City</th><th>Zip Code</th>
             	<th>Group Size</th><th>Category1</th><th>Category2</th><th>Category3</th>
             	<th>Noise Level</th><th>Creation date</th>
             	<%
+            	int idCounter = 1;
             	while(rs.next()){
             	%>
             		<tr><td align="center"><%= rs.getString(1) %></td><td align="center"><%= rs.getString(2) %></td><td align="center"><%= rs.getString(3) %></td>
             		<td align="center"><%= rs.getString(4) %></td><td align="center"><%= rs.getString(5) %></td><td align="center"><%= rs.getString(6) %></td>
             		<td align="center"><%= rs.getString(7) %></td><td align="center"><%= rs.getString(8) %></td><td align="center"><%= rs.getString(9) %></td>
             		<td align="center"><%= rs.getString(10) %></td><td align="center"><%= rs.getString(11) %></td>
-              <%}%>
+            		
+            		<form id="form" method="post" action="opendetail">
+              		<td align="center"><input type="button" name="Detail" value="Detail" onclick="window.location='spotDetailPage.jsp'"></input></td>
+              		<td align="center"><input type="button" name="Favorite" value="Favorite" onclick="window.location='spotterFavoritePage.jsp'"></input></td>
+              		</form>
+              		<% 
+              		idCounter++;
+              	}
+              	%>
               </table>
             <%}else{
-            	pst = con.prepareStatement("select * from spots where name like ?");
+            	pst = con.prepareStatement("select spot_id, name, address, city, zipcode, group_size, category_1, category_2, category_3, noise_level, creation_date from spots where name like ?");
                 pst.setString(1, "%" + name + "%");
                 rs = pst.executeQuery();%>
-                <table border="1" align="center">
+                <table border="1">
             	<tr><th>Spot ID</th><th>Name</th><th>Address</th><th>City</th><th>Zip Code</th>
             	<th>Group Size</th><th>Category1</th><th>Category2</th><th>Category3</th>
             	<th>Noise Level</th><th>Creation date</th>
@@ -63,9 +72,15 @@ pageEncoding="UTF-8"%>
             		<td align="center"><%= rs.getString(4) %></td><td align="center"><%= rs.getString(5) %></td><td align="center"><%= rs.getString(6) %></td>
             		<td align="center"><%= rs.getString(7) %></td><td align="center"><%= rs.getString(8) %></td><td align="center"><%= rs.getString(9) %></td>
             		<td align="center"><%= rs.getString(10) %></td><td align="center"><%= rs.getString(11) %></td>
-              <%}%>
-              </table>
-            <%}
+              
+              		<form id="form" method="post" action="opendetail">
+              		<td align="center"><input type="button" name="Detail" value="Detail" onclick="window.location='spotDetailPage.jsp'"></input></td>
+              		<td align="center"><input type="button" name="Favorite" value="Favorite" onclick="window.location='spotterFavoritePage.jsp'"></input></td>
+              		</form>
+              <%}
+            }
+            %></table>
+    <%
     } catch(SQLException e) { 
            out.println("SQLException caught: " + e.getMessage()); 
     }%>
