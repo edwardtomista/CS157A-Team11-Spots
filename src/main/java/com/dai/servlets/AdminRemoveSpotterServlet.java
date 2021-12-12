@@ -36,7 +36,7 @@ public class AdminRemoveSpotterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SpotsDatabase sdb = new SpotsDatabase();
-		String email = request.getParameter("spotterEmail");
+		String email = request.getParameter("getSpotterEmail");
 		sdb.removeSpotter(email);
 		request.getRequestDispatcher("adminManageSpotter.jsp").forward(request, response);
 	}

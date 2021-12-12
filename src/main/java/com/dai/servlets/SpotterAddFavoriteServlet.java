@@ -6,19 +6,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.dai.database.SpotsDatabase;
 
 /**
- * Servlet implementation class SpotHostSearchServlet
+ * Servlet implementation class SpotterAddFavoriteServlet
  */
-@WebServlet("/spothostsearch")
-public class SpotHostSearchServlet extends HttpServlet {
+@WebServlet("/addfavorite")
+public class SpotterAddFavoriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SpotHostSearchServlet() {
+    public SpotterAddFavoriteServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -32,11 +36,12 @@ public class SpotHostSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	   	try {
-            request.getRequestDispatcher("spotHostPage.jsp").forward(request, response);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		HttpSession session = request.getSession();
+		String email = (String)session.getAttribute("email");
+		int spotID = Integer.parseInt(request.getParameter("getSpotID"));
+		SpotsDatabase spots = new SpotsDatabase();
+		System.out.println(spots.addToFavorite(spotID, email));
+		request.getRequestDispatcher("spotterPage.jsp").forward(request, response);
+	}
+
 }
