@@ -35,7 +35,7 @@ pageEncoding="UTF-8"%>
             rs = pst.executeQuery();
             while (rs.next()) 
             {
-                    out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + rs.getInt(4) + rs.getString(5) "<br/><br/>");
+                    out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + rs.getInt(4) + rs.getString(5));
             }
         } catch(SQLException e) { 
             out.println("SQLException caught: " + e.getMessage()); 
